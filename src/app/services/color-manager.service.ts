@@ -12,12 +12,12 @@ export class ColorManagerService {
   results: MijterMindResult[] = [];
   // nSelectionMatch = 0;
 
-  constructor() { 
+  constructor() {
     this.reset();
   }
 
   selectRandom() {
-    const item = this.colorPool[Math.floor(Math.random()*this.colorPool.length)];
+    const item = this.colorPool[Math.floor(Math.random() * this.colorPool.length)];
     return item;
   }
 
@@ -28,36 +28,37 @@ export class ColorManagerService {
     this.colorsAnswer = [];
     for (let i = 0; i < this.nColors; i++) {
       const color = this.selectRandom();
-      this.colorsAnswer.push(color); 
+      this.colorsAnswer.push(color);
     }
   }
 
-  testColors(colors: Color[]) {
+  testColors(inputColors: Color[]) {
     // this.nSelectionMatch = 0;
-    this.colorsHistory.push(colors);
+    this.colorsHistory.push(inputColors);
     const colorTest: boolean[] = [];
     let nAlmostMatch = 0;
     let nExactMatch = 0;
 
-    for (let i = 0; i < this.nColors; i++) {
-      if(i >= colors.length) {
-        colorTest.push(false);
-        continue;
-      }
-      const color = colors[i];
-      
-
-      const exactMatch = this.colorsAnswer[i] === color
-      colorTest.push(exactMatch);
-
-      if(exactMatch) {
+    const colorsAnswerCopy: Color[] = this.colorsAnswer.slice();
+    const inputColorsCopy: Color[] = inputColors.slice();
+    for (let i = colorsAnswerCopy.length - 1; i >= 0; i--) {
+      const exactMatch = inputColorsCopy[i] === colorsAnswerCopy[i];
+      if (exactMatch) {
         nExactMatch++;
-      } else if(this.colorsAnswer.indexOf(color) > -1) {
-        // this.nSelectionMatch++;
-        nAlmostMatch++;
+        this.removeColorAtIndex(inputColorsCopy, i);
+        this.removeColorAtIndex(colorsAnswerCopy, i);
       }
-
+      colorTest.push(exactMatch);
     }
+
+    for (let i = 0; i < colorsAnswerCopy.length; i++) {
+      const indexInInputColorsCopy = inputColorsCopy.indexOf(colorsAnswerCopy[i]);
+      if (indexInInputColorsCopy > -1) {
+        nAlmostMatch++;
+        this.removeColorAtIndex(inputColorsCopy, indexInInputColorsCopy);
+      }
+    }
+
     this.results.push({
       nExactMatch: nExactMatch,
       nAlmostMatch: nAlmostMatch
@@ -66,18 +67,21 @@ export class ColorManagerService {
     return colorTest;
   }
 
+  private removeColorAtIndex(colorArray: Color[], zeroBasedIndex: number) {
+    colorArray.splice(zeroBasedIndex, 1);
+  }
 }
 
 export enum Color {
-  red = "red", 
-  green = "green", 
-  blue = "blue", 
-  yellow = "yellow", 
-  pink = "pink", 
-  black = "black"
+  red = 'red',
+  green = 'green',
+  blue = 'blue',
+  yellow = 'yellow',
+  pink = 'pink',
+  black = 'black'
 }
 
 export interface MijterMindResult {
-  nExactMatch: number; 
+  nExactMatch: number;
   nAlmostMatch: number;
 }
