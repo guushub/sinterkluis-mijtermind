@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-6">
+            <div class="row" *ngFor="let record of history">  
+                    <div class="col-2" *ngFor="let color of record">
+                        <img src="/assets/{{color}}.png" class="rounded-circle">
+                    </div>
+            </div>
+    </div>
+    <div class="col-6">
+            <div class="row result" *ngFor="let result of results">  
+                    <div class="col-2">
+                        <h2>{{result.nExactMatch}}</h2>
+                    </div>
+                    <div class="col-2">
+                            <img src="/assets/mijter.png" class="rounded-circle">
+                    </div>
+                    <div class="col-2">
+                    </div>
+                    <div class="col-2">
+                            <h2>{{result.nAlmostMatch}}</h2>
+                    </div>                    
+                    <div class="col-2">
+                            <img src="/assets/staf.png" class="rounded-circle">
+                    </div>
+            </div>
+    </div>
+</div>

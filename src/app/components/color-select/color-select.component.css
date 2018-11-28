@@ -1,0 +1,15 @@
+.selected-image {
+    max-width: 100%
+}
+.deck {
+    height: 250px;
+    margin-top: 100px;
+}
+
+.control {
+    margin-top: 35px;
+}
+
+.button-bar{
+    height:25px;
+}
