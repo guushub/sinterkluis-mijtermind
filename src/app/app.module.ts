@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ColorSelectComponent } from './components/color-select/color-select.component';
 import { ColorHistoryComponent } from './components/color-history/color-history.component';
+import {  HttpClientModule  } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -12,9 +13,11 @@ import { ColorHistoryComponent } from './components/color-history/color-history.
     ColorHistoryComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule 
   ],
-  providers: [],
+  providers: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

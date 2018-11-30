@@ -51,4 +51,8 @@ export class ColorSelectComponent implements OnInit {
     this.reset();
   }
 
+  restart() {
+    this.colorManagerService.reset();
+  }
+
 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,7 @@ export class ColorManagerService {
   results: MijterMindResult[] = [];
   // nSelectionMatch = 0;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.reset();
   }
 
@@ -64,7 +65,26 @@ export class ColorManagerService {
       nAlmostMatch: nAlmostMatch
     });
 
+    this.sendCode(colorTest).toPromise()
+    .then((result)=>console.log(result))
+    .catch((err)=> console.log(err));
+
     return colorTest;
+  }
+
+  public closeVault() {
+    this.sendCode([false, false, false, false, false]).toPromise()
+    .then(res=>console.log(res))
+    .catch(err=>console.log(err));
+  }
+
+  private sendCode(testResult: boolean[]) {
+    const code = testResult.map(result => result ? "1" : "0");
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json'});
+    let options = { headers: headers };
+
+    return this.http.post("http://localhost:8080/api/sinterkluis", {code: code}, options);
   }
 
   private removeColorAtIndex(colorArray: Color[], zeroBasedIndex: number) {
