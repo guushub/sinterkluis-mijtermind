@@ -18,8 +18,4 @@ export class ColorHistoryComponent implements OnInit {
     this.results = this.colorManagerService.results;
   }
 
-  
-
-
-
 }

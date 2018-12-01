@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ColorManagerService, Color } from '../../services/color-manager.service';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-color-select',
@@ -11,6 +12,18 @@ export class ColorSelectComponent implements OnInit {
   colors: Color[] = [];
   images: string[] = [];
 
+  @HostListener('document:keydown.backspace', ['$event'])
+  handleBackspaceKeydown() {
+    this.unselectColor();
+  }
+
+  @HostListener('document:keydown.enter', ['$event'])
+  handleEnterKeydown() {
+    if (this.colors.length === 5) {
+      this.testSelection();
+    }
+  }
+
   constructor(private colorManagerService: ColorManagerService) { }
 
   ngOnInit() {
@@ -18,7 +31,7 @@ export class ColorSelectComponent implements OnInit {
   }
 
   selectColor(color: Color) {
-    if(this.colors.length >= 5) {
+    if (this.colors.length >= 5) {
       return;
     }
     this.colors.push(color);
@@ -26,7 +39,7 @@ export class ColorSelectComponent implements OnInit {
   }
 
   unselectColor() {
-    if(this.colors.length < 1) {
+    if (this.colors.length < 1) {
       return;
     }
 
@@ -36,7 +49,7 @@ export class ColorSelectComponent implements OnInit {
   }
 
   setImage(color: Color) {
-    let imgUrl = `/assets/${color}.png`;
+    const imgUrl = `/assets/${color}.png`;
     this.images.push(imgUrl);
   }
 

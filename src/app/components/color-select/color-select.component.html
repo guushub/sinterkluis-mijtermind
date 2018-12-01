@@ -1,7 +1,7 @@
 <div class="container">
     <div class="row button-bar">
-        <div class="col-12">
-              <button class="btn btn-danger btn-lg btn-block" (click)="unselectColor()" *ngIf="colors.length"><= Backspace</button>
+      <div class="col-4"></div><div class="col-2">
+              <button class="btn btn-danger btn-lg btn-block" (click)="unselectColor()" *ngIf="colors.length">⌫ Backspace</button>
         </div>
       </div>
   <div class="row deck">
@@ -11,8 +11,8 @@
   </div>
 
   <div class="row button-bar">
-      <div class="col-12">
-            <button class="btn btn-success btn-lg btn-block" (click)="testSelection()" *ngIf="colors.length === 5">OK =></button>  
+    <div class="col-4"></div><div class="col-2">
+            <button class="btn btn-success btn-lg btn-block" (click)="testSelection()" *ngIf="colors.length === 5">Enter ⏎</button>
       </div>
     </div>
 

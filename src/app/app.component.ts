@@ -12,7 +12,7 @@ export class AppComponent implements OnInit {
   constructor(private colorManagerService: ColorManagerService) {
 
   }
-  
+
   ngOnInit() {
     this.colorManagerService.closeVault();
   }
