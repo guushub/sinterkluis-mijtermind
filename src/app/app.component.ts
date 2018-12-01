@@ -7,10 +7,14 @@ import { ColorManagerService } from './services/color-manager.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'app';
+  hasWon = false;
 
   constructor(private colorManagerService: ColorManagerService) {
 
+  }
+
+  onHasWonChange(hasWon: boolean) {
+    this.hasWon = hasWon;
   }
 
   ngOnInit() {

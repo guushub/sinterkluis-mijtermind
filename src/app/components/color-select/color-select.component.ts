@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { ColorManagerService, Color } from '../../services/color-manager.service';
 import { HostListener } from '@angular/core';
 
@@ -8,6 +8,7 @@ import { HostListener } from '@angular/core';
   styleUrls: ['./color-select.component.css']
 })
 export class ColorSelectComponent implements OnInit {
+  @Output() hasWonChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   colorPool: Color[] = [];
   colors: Color[] = [];
   images: string[] = [];
@@ -60,8 +61,13 @@ export class ColorSelectComponent implements OnInit {
 
   testSelection() {
     const testResult = this.colorManagerService.testColors(this.colors);
+    const allAnswersWereCorrect = testResult.indexOf(false) === -1;
+    this.hasWonChange.emit(allAnswersWereCorrect);
     console.log(testResult);
-    this.reset();
+
+    if (!allAnswersWereCorrect) {
+      this.reset();
+    }
   }
 
   restart() {
